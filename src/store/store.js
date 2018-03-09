@@ -4,58 +4,40 @@ const store = {
     routeToFSA: true
   },
   laRouting: {
-    "LND": {
-      "name": "City of London Corporation",
-      "email": true,
-      "mis": true,
-      "fsa": true
-    },
     "WOC": {
       "name": "Worcester City Council",
-      "email": true,
-      "mis": true,
+      "emailConfig": {
+        "active": true,
+        "recipients": [process.env.TEST_EMAIL || undefined]
+      },
+      "misConfig": {
+        "active": true,
+        "mapping": {}
+      },
       "fsa": true
     },
     "RED": {
       "name": "Redditch Borough Council",
-      "email": true,
-      "mis": true,
+      "emailConfig": {
+        "active": true,
+        "recipients": [process.env.TEST_EMAIL || undefined]
+      },
+      "misConfig": {
+        "active": true,
+        "mapping": {}
+      },
       "fsa": true
     },
     "MAV": {
       "name": "Malvern Hills District Council",
-      "email": true,
-      "mis": true,
-      "fsa": true
-    },
-    "BRM": {
-      "name": "Bromsgrove District Council",
-      "email": true,
-      "mis": true,
-      "fsa": true
-    },
-    "WAW": {
-      "name": "Warwick District Council",
-      "email": true,
-      "mis": true,
-      "fsa": true
-    },
-    "RUG": {
-      "name": "Rugby Borough Council",
-      "email": true,
-      "mis": true,
-      "fsa": true
-    },
-    "NWA": {
-      "name": "North Warwickshire Borough Council",
-      "email": true,
-      "mis": true,
-      "fsa": true
-    },
-    "STA": {
-      "name": "Stafford Borough Council",
-      "email": true,
-      "mis": true,
+      "emailConfig": {
+        "active": true,
+        "recipients": [process.env.TEST_EMAIL || undefined]
+      },
+      "misConfig": {
+        "active": true,
+        "mapping": {}
+      },
       "fsa": true
     }
   }

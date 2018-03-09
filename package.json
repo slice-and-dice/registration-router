@@ -13,6 +13,7 @@
     "express": "4.16.2",
     "lodash": "^4.17.5",
     "nodemon": "1.15.1",
+    "notifications-node-client": "^4.1.0",
     "winston": "2.4.0"
   },
   "devDependencies": {
