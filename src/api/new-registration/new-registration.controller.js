@@ -5,7 +5,7 @@ const winston = require('winston');
 module.exports = async (data) => {
   winston.info(`newregistration.controller called`);
 
-  // TODO: use a new service to split the registration data into 'original registration fields' and 'new registration fields'
+  // TODO: use a new service to split the registration data into 'core registration fields' and 'enhanced registration fields'
   let registrationData = data.registrationData;
 
   try {
