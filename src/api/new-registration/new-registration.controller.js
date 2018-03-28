@@ -9,6 +9,11 @@ const winston = require("winston");
 module.exports = async data => {
   winston.info(`newregistration.controller called`);
 
+  // set a flag of 'acceptedByLa' to false if the flag does not already exist.
+  // this shows that the registration is either new or updated (update model W.I.P), and the new data has not yet been accepted by an LA as being valid.
+  // the flag will be set to a truthy value when it is returned by an LA.
+  data.acceptedByLa = data.acceptedByLa || false;
+
   // TODO: use a new service to split the registration data into 'core registration fields' and 'enhanced registration fields'
   let registrationData = data.registrationData;
 
