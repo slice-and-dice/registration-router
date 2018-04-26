@@ -6,7 +6,10 @@ module.exports = async (data) => {
   winston.info(`newregistration.controller called`);
 
   // TODO: use a new service to split the registration data into 'original registration fields' and 'new registration fields'
-  let registrationData = data.registrationData;
+
+  const { fsa_rn } = data;
+
+  let registrationData = Object.assign({ fsa_rn }, data.registrationData);
 
   try {
     const routing = await store.getLaRouting(data.localAuthority.id);
