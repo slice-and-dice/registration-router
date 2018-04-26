@@ -1,5 +1,5 @@
-const app = require('./app');
-const { info } = require('winston');
+const app = require("./app");
+const { info } = require("winston");
 
 const { PORT = 4002 } = process.env;
 
