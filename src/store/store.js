@@ -28,7 +28,7 @@ const store = {
       },
       "fsa": true
     },
-    "MAV": {
+    "4016": {
       "name": "Malvern Hills District Council",
       "emailConfig": {
         "active": true,

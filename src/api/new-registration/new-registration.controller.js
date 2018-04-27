@@ -41,7 +41,7 @@ module.exports = async data => {
 
       if (routing.misConfig.active === true) {
         routePromises.push(
-          routeMisConnectorService.send(registrationData, routing.misConfig)
+          routeMisConnectorService.send(registrationData, data.localAuthority)
         );
       }
     }

@@ -1,5 +1,6 @@
 const winston = require('winston');
 const { tascomiAuth } = require('@slice-and-dice/fsa-rof');
+const request = require('request');
 
 const authorityMap = {
   '4016': {
@@ -23,7 +24,7 @@ const send = async (data, config) => {
 
   switch (mapping.format) {
     case 'tascomiDefault':
-      return tascomiConnector(data);
+      return tascomiConnector({ data });
     case 'civicaDefault':
       return;
     default:
@@ -31,8 +32,9 @@ const send = async (data, config) => {
   }
 }
 
-const tascomiConnector = async (data) => {
-  const auth = await tascomiAuth.generateSyncHash(public_key, private_key, ntpServer);
+const tascomiConnector = async ({ data }) => {
+  const auth = await tascomiAuth.generateSyncHash(process.env.PUBLIC_KEY, process.env.PRIVATE_KEY, process.env.NTP_SERVER);
+  const baseURL = process.env.BASE_API_URL;
 
   winston.info('route-mis-connector.service: tascomiConnector() called');
 
@@ -45,13 +47,13 @@ const tascomiConnector = async (data) => {
   };
 
   let contactOptions = Object.assign({ url: `${baseURL}/contacts`, form: {
-    firstname: body.operator_first_name,
-    surname: body.operator_last_name,
-    postcode: body.operator_postcode,
-    street_name: body.operator_address,
-    telephone: body.operator_contact_number,
-    email: body.operator_email,
-    company_name: body.operator_company_name,
+    firstname: data.operator_first_name,
+    surname: data.operator_last_name,
+    postcode: data.operator_postcode,
+    street_name: data.operator_address,
+    telephone: data.operator_contact_number,
+    email: data.operator_email,
+    company_name: data.operator_company_name,
   }}, baseOptions);
 
   let contactResponseRaw = await request(contactOptions);
@@ -59,8 +61,8 @@ const tascomiConnector = async (data) => {
   let contactId = contactResponse.id;
 
   let premisesOptions = Object.assign({ url: `${baseURL}/premises`, form: {
-    name: body.establishment_name,
-    govid: body.fsa_rn,
+    name: data.establishment_name,
+    govid: data.fsa_rn,
     contact_id: contactId,
     occupier_contact_id: contactId
   }}, baseOptions);
