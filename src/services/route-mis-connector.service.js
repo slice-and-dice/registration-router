@@ -1,6 +1,7 @@
 const winston = require('winston');
 const { tascomiAuth } = require('@slice-and-dice/fsa-rof');
 const request = require('request');
+const fetch = require('node-fetch');
 
 const authorityMap = {
   '4016': {
@@ -42,11 +43,13 @@ const tascomiConnector = async ({ data }) => {
     method: "PUT",
     headers: {
       "X-Public": auth.public_key,
-      "X-Hash": auth.hash
+      "X-Hash": auth.hash,
+      'Content-Type': 'application/json'
     }
   };
 
-  let contactOptions = Object.assign({ url: `${baseURL}/contacts`, form: {
+  // let contactOptions = Object.assign({ url: `${baseURL}/contacts`, body: {
+  let contactBody = JSON.stringify(Object.assign({}, {
     firstname: data.operator_first_name,
     surname: data.operator_last_name,
     postcode: data.operator_postcode,
@@ -54,9 +57,13 @@ const tascomiConnector = async ({ data }) => {
     telephone: data.operator_contact_number,
     email: data.operator_email,
     company_name: data.operator_company_name,
-  }}, baseOptions);
+  }));
 
-  let contactResponseRaw = await request(contactOptions);
+  let contactOptions = Object.assign({ contactBody }, baseOptions);
+
+  let contactResponseRaw = await fetch(`${baseURL}/contacts`, contactOptions);
+
+  // let contactResponseRaw = await request(contactOptions);
   let contactResponse = JSON.parse(contactResponseRaw);
   let contactId = contactResponse.id;
 
