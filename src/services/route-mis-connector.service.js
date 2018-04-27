@@ -48,7 +48,6 @@ const tascomiConnector = async ({ data }) => {
     }
   };
 
-  // let contactOptions = Object.assign({ url: `${baseURL}/contacts`, body: {
   let contactBody = JSON.stringify(Object.assign({}, {
     firstname: data.operator_first_name,
     surname: data.operator_last_name,
@@ -60,30 +59,30 @@ const tascomiConnector = async ({ data }) => {
   }));
 
   let contactOptions = Object.assign({ contactBody }, baseOptions);
-
   let contactResponseRaw = await fetch(`${baseURL}/contacts`, contactOptions);
-
-  // let contactResponseRaw = await request(contactOptions);
-  let contactResponse = JSON.parse(contactResponseRaw);
+  let contactResponse = await contactResponseRaw.json();
   let contactId = contactResponse.id;
 
-  let premisesOptions = Object.assign({ url: `${baseURL}/premises`, form: {
+  let premisesBody = JSON.stringify(Object.assign({}, {
     name: data.establishment_name,
     govid: data.fsa_rn,
     contact_id: contactId,
-    occupier_contact_id: contactId
-  }}, baseOptions);
+    occupier_contact_id: contactId,
+  }));
 
-  let premisesResponseRaw = await request(premisesOptions);
-  let premisesResponse = JSON.parse(premisesResponseRaw);
+  let premisesOptions = Object.assign({ premisesBody }, baseOptions);
+  let premisesResponseRaw = await fetch(`${baseURL}/premises`, premisesOptions);
+  let premisesResponse = await premisesResponseRaw.json();
   let premisesId = premisesResponse.id;
 
-  let foodOptions = Object.assign({ url: `${baseURL}/food`, form: {
+  let foodBody = JSON.stringify(Object.assign({}, {
     registration_date: "now",
-    premise_id: premisesId
-  }}, baseOptions);
-  let foodResponseRaw = await request(foodOptions);
-  let foodResponse = JSON.parse(foodResponseRaw);
+    premise_id: premisesId,
+  }));
+
+  let foodOptions = Object.assign({ foodBody }, baseOptions);
+  let foodResponseRaw = await fetch(`${baseURL}/food`, foodOptions);
+  let foodResponse = await foodResponseRaw.json();
 
   winston.info('route-mis-connector.service: tascomiConnector() successful');
 
