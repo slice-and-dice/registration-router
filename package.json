@@ -16,6 +16,8 @@
     "node-fetch": "^2.1.2",
     "nodemon": "1.15.1",
     "notifications-node-client": "^4.1.0",
+    "request": "^2.85.0",
+    "request-promise-native": "^1.0.5",
     "winston": "2.4.0"
   },
   "devDependencies": {
