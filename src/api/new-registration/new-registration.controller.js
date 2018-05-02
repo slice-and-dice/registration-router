@@ -16,9 +16,9 @@ module.exports = async data => {
 
   // TODO: use a new service to split the registration data into 'original registration fields' and 'new registration fields'
 
-  const { fsa_rn } = data;
+  let registrationData = Object.assign({}, data.registrationData);
 
-  let registrationData = Object.assign({ fsa_rn }, data.registrationData);
+  registrationData["fsa_rn"] = data["fsa-rn"];
 
   try {
     const routing = await store.getLaRouting(data.localAuthority.id);

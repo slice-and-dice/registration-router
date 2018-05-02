@@ -41,7 +41,7 @@ const send = async (data, config) => {
         name: data.establishment_name,
         dtf_location_id: "8116316",
         f_registered: "t",
-        govid: "GDVR8W-8SMADJ-P6NPQX"
+        govid: data["fsa_rn"]
       },
       requiredDataArray: [
         { source: "id", destination: "contact_id" },
